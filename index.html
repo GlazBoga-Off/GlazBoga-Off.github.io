@@ -834,6 +834,55 @@
                 font-size: 1.2rem;
             }
         }
+/* --- Стили для анимированных счетчиков в Hero-секции --- */
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 80px; /* Расстояние между счетчиками */
+    margin: 40px auto 70px; /* Отступы */
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.05); /* Легкий фон */
+    border-radius: 20px;
+    max-width: 600px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 25px rgba(26, 92, 255, 0.2);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem; /* Крупный размер */
+    font-weight: 700;
+    margin-bottom: 10px;
+    /* Текстовый градиент и свечение */
+    background: var(--text-gradient-main); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+    line-height: 1;
+}
+
+.stat-label {
+    color: var(--neon-cyan);
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+    .hero-stats {
+        flex-direction: column;
+        gap: 30px;
+        max-width: 90%;
+    }
+    .stat-value {
+        font-size: 2rem;
+    }
+}
+        
     </style>
 </head>
 <body>
@@ -904,6 +953,39 @@
         initStars();
         animateStars();
 
+        // JS для анимированных счетчиков
+    document.addEventListener('DOMContentLoaded', () => {
+        const counters = document.querySelectorAll('.stat-value');
+        
+        function formatNumber(num) {
+            // Форматирование числа с пробелами как разделителями тысяч
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+
+        counters.forEach(counter => {
+            let currentValue = parseInt(counter.getAttribute('data-target'));
+            const increment = parseInt(counter.getAttribute('data-increment'));
+            
+            // Инициализация счетчика
+            counter.textContent = formatNumber(currentValue);
+
+            const updateCounter = () => {
+                // Увеличение значения на заданный инкремент
+                currentValue += increment;
+                
+                // Обновление отображения
+                counter.textContent = formatNumber(currentValue);
+                
+                // Скорость обновления: каждые 1-2 секунды (случайный интервал для естественности)
+                const delay = Math.random() * 1000 + 1000; 
+                setTimeout(updateCounter, delay);
+            };
+
+            // Запускаем счетчик через небольшой интервал после загрузки
+            setTimeout(updateCounter, 3000); 
+        });
+    });
+
         // Base64 Placeholder для логотипов (обновленный SVG для Telegram)
         const GB_LOGO_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC80lEQVR4nO2az2tVQRDHu3d7t9s2adU6LooRBP4J/C/4I4L/L/wDgg8vLKKggoIi+JdgS6oJ3YV/gkhS+z13xswmMxvdvYnLh82XmWxmb/PdmWfmb+aT/f/11a5pM8vVn1L1/v7+18mP3g1uI4aJ3lK1S/pD+m7o9+c/2776c5rI+0R1p+n9SjpL9lE/2f5t+9lNaSNpCekTkm62gT1X9I/SXpL0r5L/0V6S9JtI28g/9J/2v5N+t1W2zTJJQ0DqFvS37KvVf5V+xH+7cWb+gPph+0d9W/bTtv4Nf/hN2v/aTu/307b22K+q/bT+lM27yP9v/an9tO29iN9SPpY9n7aT/rP0sO2bY1pJP2c9IP2y/aLtlE/mH5K0j/bTtv6Afl0wX8b3bZ/1P5ZdsLWH/jD+gH5A9rD9hG/5C9kv21+yP+T/8R/uJvP/kR32v4X+33bFltT/Jzsv22+yS+j32w/ZPtl32/pL+0920z7H9LfsQdts+x/ZPtlF2//xH+3n22O2X/b/p1+3cWXfVft32zn7H9Pfs0dts+w/bfdsU+w//E/eLtvN+x/ePtlF23/+528/7Vltb/m3tX23/dvdv/vLz/9t+2pbf/7m779uf8D+0N+/2g/Y/tD++v23/5P9oP22+2lbf/pX9pP23+3/aP9mP23/ZPtv/2L+1P7T/tv2x/Zz9m/2v7Y/tN+z/ZP9v+yHb/9lP2T7Zftj+2m/Yftv2x/Z/tP2X/afsv2//Yfsv2y/ZH9tP2x/bV9sP2h/bV9sP2v7Zftf2z/bX9t/2/7b/tv22/b/tt+237X9tv237X/tt+237X9tv237X/tv237X/tt+237X/tt+237X9tv237X/tt+237X9tv237X/tt+237X9tv237X/tt+237X9tv237X/tv237X9tv237X9tt/wGjD8G+T+SgAAAABJRU5ErkJggg==";
         const TG_BOT_ICON_BASE64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2LjMyNCA2LjcwMUMxNi4zMjQgNi43MDEgMTYuNDI1IDUuMTgzIDE1LjYxMyA0LjM3MUwxMi41MzcgMS4zNjRDMTEuNzI2IDAuNTUzIDEwLjE1NSAwLjU1MyA5LjMzOSAxLjM2NEw1LjYwMyA1LjM5NWMtMC44MTIgMC44MTIgLTAuNzEyIDIuMzgyIC0wLjcxMiAyLjM4Mkw4LjA1NSA5LjgyNkM4LjA1NSA5LjgyNiA4LjE1NiAxMC4wNjYgOC44NjggMTAuMjQ1TDExLjE5MSAxMS4wNjRMMTAuMzgyIDEzLjM4N0MxMC4yMDMgMTQuMDg5IDEwLjA5NiAxNC4yMjkgMTAuMDk2IDE0LjIyOUw1Ljk3NyAxNi41MzVjLTAuNDEyIDAuNjE2IC0wLjExNyAxLjM0NSAwLjQ0NiAxLjc1N2wyLjU2MyAxLjg1QzkuNDMyIDIwLjcyNSAxMC40MjcgMjAuODcgMTEuMjYzIDIwLjMyTDExLjkyOCAyMC4xMzJDMTEuOTI4IDIwLjEzMiAxMi4yNzEgMTkuMTEyIDEyLjg3MiAxOC4xODdMMTkuMDcgMTAuNTY3QzE5LjA3IDEwLjU2NyAxOS4zMjUgMTAuMjU1IDE5LjM1NiA5LjgwOEwxNi4zMjQgNi43MDFaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K";
@@ -951,12 +1033,20 @@
     <section class="hero" id="home">
         <div class="container">
             <h1>Мощный <span style="background: var(--text-gradient-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">OSINT-инструмент</span> нового поколения</h1>
-            <p>Глаз Бога — российская платформа для анализа больших данных из открытых источников. Получите сведения о людях и компаниях с помощью интуитивного интерфейса Telegram-бота.</p>
-            
-            <a href="https://t.me/GlazBoga_Off_Bot" class="cta-button" target="_blank" rel="noopener noreferrer">
-                <span>Начать расследование</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M16 12l-4 4-4-4"></path><path d="M12 16V8"></path></svg>
-            </a>
+           <p>Глаз Бога — российская платформа для анализа больших данных из открытых источников. Получите сведения о людях и компаниях с помощью интуитивного интерфейса Telegram-бота.</p>
+    
+    <div class="hero-stats">
+        <div class="stat-item">
+            <div class="stat-value" data-target="45674500" data-increment="32">45 674 500</div>
+            <div class="stat-label">Номеров в базе</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" data-target="199345699" data-increment="148">199 345 699</div>
+            <div class="stat-label">Фотографий в базе</div>
+        </div>
+    </div>
+    
+    <a href="https://t.me/GlazBoga_Off_Bot" class="cta-button" target="_blank" rel="noopener noreferrer">
             
             <div class="hero-bots">
                 <div class="hero-bot-card">
