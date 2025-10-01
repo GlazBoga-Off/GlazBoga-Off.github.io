@@ -4,400 +4,508 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Глаз Бога - OSINT платформа</title>
+    <title>Глаз Бога | OSINT Платформа</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #1a1a2e;
-            --secondary-color: #16213e;
-            --accent-color: #0f3460;
-            --highlight-color: #e94560;
-            --text-color: #f1f1f1;
-            --light-gray: #8f8f8f;
+            --deep-space: #0a0a0f;
+            --dark-matter: #111122;
+            --stellar-blue: #1a5cff;
+            --quantum-purple: #7024ff;
+            --neon-cyan: #00f2fe;
+            --pure-white: #ffffff;
+            --light-gray: #a0a0b0;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
-        
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            background: linear-gradient(135deg, var(--deep-space) 0%, var(--dark-matter) 100%);
+            color: var(--pure-white);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
-        
+
+        /* Parallax Sections */
+        .parallax {
+            position: relative;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .parallax-1 {
+            background-image: linear-gradient(rgba(10, 10, 15, 0.85), rgba(26, 92, 255, 0.1)), 
+                              url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3');
+            min-height: 100vh;
+        }
+
+        .parallax-2 {
+            background-image: linear-gradient(rgba(10, 10, 15, 0.9), rgba(112, 36, 255, 0.1)), 
+                              url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3');
+            min-height: 60vh;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         /* Header */
         header {
-            background-color: var(--secondary-color);
-            padding: 20px 0;
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        
+
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--highlight-color);
-            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--stellar-blue), var(--quantum-purple));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 20px;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: 0 8px 25px rgba(26, 92, 255, 0.3);
         }
-        
+
         .logo-text {
             font-size: 24px;
             font-weight: 700;
+            background: linear-gradient(135deg, var(--pure-white), var(--light-gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        
-        .logo-text span {
-            color: var(--highlight-color);
-        }
-        
+
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 40px;
         }
-        
+
         nav a {
-            color: var(--text-color);
+            color: var(--light-gray);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        nav a:hover {
-            color: var(--highlight-color);
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 100px 0;
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-            text-align: center;
-        }
-        
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 20px;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            color: var(--light-gray);
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background-color: var(--highlight-color);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.6);
-        }
-        
-        /* Features Section */
-        .features {
-            padding: 100px 0;
-            background-color: var(--primary-color);
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 60px;
+            font-size: 16px;
+            transition: all 0.3s ease;
             position: relative;
         }
-        
+
+        nav a:hover {
+            color: var(--pure-white);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--stellar-blue), var(--neon-cyan));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, var(--pure-white) 0%, var(--neon-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--light-gray);
+            max-width: 700px;
+            margin: 0 auto 50px;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--stellar-blue), var(--quantum-purple));
+            color: white;
+            padding: 18px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(26, 92, 255, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(26, 92, 255, 0.6);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 0;
+            background: rgba(255, 255, 255, 0.02);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -15px;
+            bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background-color: var(--highlight-color);
+            background: linear-gradient(90deg, var(--stellar-blue), var(--neon-cyan));
+            border-radius: 2px;
         }
-        
+
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
         }
-        
+
         .feature-card {
-            background-color: var(--secondary-color);
-            border-radius: 10px;
-            padding: 30px;
-            transition: transform 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
         .feature-card:hover {
             transform: translateY(-10px);
+            border-color: rgba(26, 92, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
-        
+
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--stellar-blue), var(--quantum-purple));
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-            font-size: 24px;
+            margin-bottom: 25px;
+            font-size: 28px;
+            box-shadow: 0 8px 25px rgba(26, 92, 255, 0.3);
         }
-        
+
         .feature-card h3 {
-            font-size: 22px;
+            font-size: 1.4rem;
+            font-weight: 600;
             margin-bottom: 15px;
         }
-        
+
         .feature-card p {
             color: var(--light-gray);
+            font-size: 1rem;
         }
-        
+
         /* Bots Section */
         .bots {
-            padding: 100px 0;
-            background-color: var(--secondary-color);
+            padding: 120px 0;
         }
-        
+
         .bots-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
         }
-        
+
         .bot-card {
-            background-color: var(--primary-color);
-            border-radius: 15px;
-            padding: 40px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border-radius: 25px;
+            padding: 50px 40px;
             width: 100%;
             max-width: 500px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .bot-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(26, 92, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .bot-card:hover::after {
+            opacity: 1;
+        }
+
+        .bot-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(26, 92, 255, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
         .bot-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--accent-color), var(--highlight-color));
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--stellar-blue), var(--quantum-purple));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 30px;
+            margin: 0 auto 25px;
+            font-size: 36px;
+            box-shadow: 0 12px 30px rgba(26, 92, 255, 0.4);
         }
-        
+
         .bot-card h3 {
-            font-size: 24px;
+            font-size: 1.6rem;
+            font-weight: 600;
             margin-bottom: 15px;
         }
-        
+
         .bot-card p {
             color: var(--light-gray);
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
         }
-        
+
         .bot-username {
             display: inline-block;
-            background-color: var(--accent-color);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-family: monospace;
-            font-size: 18px;
-            margin-bottom: 25px;
-        }
-        
-        .bot-button {
-            display: inline-block;
-            background-color: var(--highlight-color);
-            color: white;
+            background: rgba(26, 92, 255, 0.15);
             padding: 12px 25px;
-            border-radius: 25px;
+            border-radius: 50px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            border: 1px solid rgba(26, 92, 255, 0.3);
+            color: var(--neon-cyan);
+        }
+
+        .bot-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--stellar-blue), var(--quantum-purple));
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(26, 92, 255, 0.4);
         }
-        
+
         .bot-button:hover {
-            background-color: #d43c55;
             transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(26, 92, 255, 0.6);
         }
-        
-        /* How It Works */
-        .how-it-works {
-            padding: 100px 0;
-            background-color: var(--primary-color);
-        }
-        
-        .steps {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 50px;
-        }
-        
-        .step {
-            flex: 1;
-            min-width: 250px;
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background-color: var(--highlight-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-weight: bold;
-            font-size: 20px;
-        }
-        
-        .step h3 {
-            margin-bottom: 15px;
-        }
-        
-        .step p {
-            color: var(--light-gray);
-        }
-        
+
         /* CTA Section */
         .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+            padding: 120px 0;
             text-align: center;
+            position: relative;
         }
-        
+
         .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
         }
-        
+
         .cta-section p {
-            font-size: 18px;
+            font-size: 1.2rem;
             max-width: 700px;
-            margin: 0 auto 40px;
-            color: rgba(255, 255, 255, 0.8);
+            margin: 0 auto 50px;
+            color: var(--light-gray);
         }
-        
+
         /* Footer */
         footer {
-            background-color: var(--secondary-color);
-            padding: 50px 0 20px;
+            background: rgba(10, 10, 15, 0.98);
+            padding: 60px 0 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
+
         .footer-content {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            gap: 40px;
-            margin-bottom: 40px;
+            gap: 50px;
+            margin-bottom: 50px;
         }
-        
+
         .footer-column {
             flex: 1;
             min-width: 200px;
         }
-        
+
         .footer-column h3 {
-            margin-bottom: 20px;
-            font-size: 20px;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--pure-white);
         }
-        
+
         .footer-column ul {
             list-style: none;
         }
-        
+
         .footer-column ul li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
-        
+
         .footer-column a {
             color: var(--light-gray);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 0.3s ease;
+            font-size: 1rem;
         }
-        
+
         .footer-column a:hover {
-            color: var(--highlight-color);
+            color: var(--neon-cyan);
         }
-        
+
         .copyright {
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--light-gray);
-            font-size: 14px;
+            font-size: 0.9rem;
         }
-        
+
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .header-content {
                 flex-direction: column;
                 gap: 20px;
             }
             
             nav ul {
-                gap: 15px;
+                gap: 25px;
             }
             
             .hero h1 {
-                font-size: 36px;
+                font-size: 2.8rem;
             }
             
             .hero p {
-                font-size: 18px;
+                font-size: 1.1rem;
             }
             
             .section-title {
-                font-size: 30px;
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .parallax {
+                background-attachment: scroll;
+            }
+            
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .bots-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .bot-card {
+                max-width: 100%;
             }
         }
     </style>
@@ -409,13 +517,12 @@
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">GB</div>
-                    <div class="logo-text">Глаз <span>Бога</span></div>
+                    <div class="logo-text">Глаз Бога</div>
                 </div>
                 <nav>
                     <ul>
                         <li><a href="#features">Возможности</a></li>
-                        <li><a href="#bots">Боты</a></li>
-                        <li><a href="#how-it-works">Как работает</a></li>
+                        <li><a href="#bots">Наши боты</a></li>
                         <li><a href="#start">Начать</a></li>
                     </ul>
                 </nav>
@@ -423,12 +530,14 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Hero Section with Parallax -->
+    <section class="parallax parallax-1" id="home">
         <div class="container">
-            <h1>Мощный OSINT-инструмент в вашем Telegram</h1>
-            <p>Глаз Бога — российская платформа для анализа больших данных из открытых источников. Получите сведения о людях и компаниях с помощью интуитивного интерфейса Telegram-бота.</p>
-            <a href="#bots" class="cta-button">Начать использовать</a>
+            <div class="hero">
+                <h1>Мощный OSINT-инструмент нового поколения</h1>
+                <p>Глаз Бога — российская платформа для анализа больших данных из открытых источников. Получите сведения о людях и компаниях с помощью интуитивного интерфейса Telegram-бота.</p>
+                <a href="#bots" class="cta-button">Начать использование</a>
+            </div>
         </div>
     </section>
 
@@ -439,85 +548,58 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🔍</div>
-                    <h3>Поиск по открытым источникам</h3>
-                    <p>Анализ данных из социальных сетей, мессенджеров, поисковых систем и других открытых источников.</p>
+                    <h3>Глубокий поиск по OSINT</h3>
+                    <p>Анализ данных из социальных сетей, мессенджеров, поисковых систем и других открытых источников с использованием передовых алгоритмов.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔗</div>
-                    <h3>Выявление взаимосвязей</h3>
-                    <p>Обнаружение совпадений между объектами и установление предполагаемых взаимосвязей.</p>
+                    <h3>Выявление скрытых взаимосвязей</h3>
+                    <p>Обнаружение совпадений между объектами и установление предполагаемых взаимосвязей с визуализацией связей.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
                     <h3>Структурирование данных</h3>
-                    <p>Автоматическое структурирование полученных данных в удобном для анализа виде.</p>
+                    <p>Автоматическое структурирование полученных данных в удобном для анализа виде с формированием отчетов.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">👤</div>
-                    <h3>Поиск по физическим лицам</h3>
-                    <p>Получение информации о людях по различным параметрам и идентификаторам.</p>
+                    <h3>Комплексный анализ лиц</h3>
+                    <p>Получение информации о людях по различным параметрам и идентификаторам с формированием цифрового портрета.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🏢</div>
-                    <h3>Анализ организаций</h3>
-                    <p>Проверка компаний и контрагентов перед совершением сделок.</p>
+                    <h3>Бизнес-аналитика</h3>
+                    <p>Проверка компаний и контрагентов перед совершением сделок с оценкой рисков и возможностей.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🚗</div>
                     <h3>Поиск по транспорту и контактам</h3>
-                    <p>Получение данных о транспортных средствах, номерах телефонов и электронных почтах.</p>
+                    <p>Получение данных о транспортных средствах, номерах телефонов и электронных почтах с проверкой достоверности.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Bots Section -->
-    <section class="bots" id="bots">
+    <!-- Bots Section with Parallax -->
+    <section class="parallax parallax-2" id="bots">
         <div class="container">
-            <h2 class="section-title">Наши Telegram-боты</h2>
-            <div class="bots-container">
-                <div class="bot-card">
-                    <div class="bot-icon">GB</div>
-                    <h3>GlazBoga_Off_Bot</h3>
-                    <p>Основной бот платформы "Глаз Бога" для комплексного анализа данных из открытых источников.</p>
-                    <div class="bot-username">@GlazBoga_Off_Bot</div>
-                    <a href="https://t.me/GlazBoga_Off_Bot" class="bot-button" target="_blank">Открыть в Telegram</a>
-                </div>
-                <div class="bot-card">
-                    <div class="bot-icon">OI</div>
-                    <h3>oiosintbot</h3>
-                    <p>Специализированный бот для OSINT-расследований и анализа открытой информации.</p>
-                    <div class="bot-username">@oiosintbot</div>
-                    <a href="https://t.me/oiosintbot" class="bot-button" target="_blank">Открыть в Telegram</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <h2 class="section-title">Как это работает</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Выберите бота</h3>
-                    <p>Откройте одного из наших Telegram-ботов</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Введите запрос</h3>
-                    <p>Задайте интересующий вас объект поиска</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Получите результат</h3>
-                    <p>Система проанализирует данные и предоставит структурированный отчет</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Проанализируйте</h3>
-                    <p>Используйте полученные данные для своих целей</p>
+            <div class="bots">
+                <h2 class="section-title">Наши Telegram-боты</h2>
+                <div class="bots-container">
+                    <div class="bot-card">
+                        <div class="bot-icon">GB</div>
+                        <h3>GlazBoga_Off_Bot</h3>
+                        <p>Основной бот платформы "Глаз Бога" для комплексного анализа данных из открытых источников с расширенным функционалом.</p>
+                        <div class="bot-username">@GlazBoga_Off_Bot</div>
+                        <a href="https://t.me/GlazBoga_Off_Bot" class="bot-button" target="_blank">Открыть в Telegram</a>
+                    </div>
+                    <div class="bot-card">
+                        <div class="bot-icon">OI</div>
+                        <h3>oiosintbot</h3>
+                        <p>Специализированный бот для OSINT-расследований и анализа открытой информации с фокусом на профессиональные задачи.</p>
+                        <div class="bot-username">@oiosintbot</div>
+                        <a href="https://t.me/oiosintbot" class="bot-button" target="_blank">Открыть в Telegram</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -526,8 +608,8 @@
     <!-- CTA Section -->
     <section class="cta-section" id="start">
         <div class="container">
-            <h2>Начните использовать Глаз Бога прямо сейчас</h2>
-            <p>Присоединяйтесь к тысячам пользователей, которые уже используют нашу платформу для анализа данных и поиска информации.</p>
+            <h2>Начните использовать Глаз Бога сегодня</h2>
+            <p>Присоединяйтесь к тысячам пользователей, которые уже используют нашу платформу для анализа данных и поиска информации. Просто выберите бота и начните работу.</p>
             <a href="#bots" class="cta-button">Выбрать бота</a>
         </div>
     </section>
@@ -538,7 +620,7 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Глаз Бога</h3>
-                    <p>Российская платформа для анализа больших данных из открытых источников.</p>
+                    <p>Российская платформа для анализа больших данных из открытых источников. Профессиональные решения для OSINT-задач.</p>
                 </div>
                 <div class="footer-column">
                     <h3>Наши боты</h3>
@@ -548,16 +630,16 @@
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h3>Информация</h3>
+                    <h3>Навигация</h3>
                     <ul>
+                        <li><a href="#home">Главная</a></li>
                         <li><a href="#features">Возможности</a></li>
-                        <li><a href="#how-it-works">Как работает</a></li>
                         <li><a href="#bots">Боты</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 Глаз Бога. Все права защищены.</p>
+                <p>&copy; 2024 Глаз Бога. Все права защищены.</p>
             </div>
         </div>
     </footer>
@@ -574,11 +656,49 @@
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: targetElement.offsetTop - 100,
                         behavior: 'smooth'
                     });
                 }
             });
+        });
+
+        // Легкий параллакс-эффект для заголовков при скролле
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax');
+            
+            parallaxElements.forEach(element => {
+                const speed = 0.5;
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Анимация появления элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за карточками особенностей и ботов
+        document.querySelectorAll('.feature-card, .bot-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
         });
     </script>
 </body>
