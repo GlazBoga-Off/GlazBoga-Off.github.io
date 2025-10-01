@@ -697,6 +697,17 @@
                 header.style.background = 'rgba(10, 10, 15, 0.95)';
             }
         });
+        // Принудительная проверка и открытие ссылок
+    document.querySelectorAll('.bot-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+            if (url && url.startsWith('https://t.me/')) {
+                window.open(url, '_blank', 'noopener,noreferrer');
+            }
+        });
+    });
+
+        
     </script>
 </body>
 </html>
