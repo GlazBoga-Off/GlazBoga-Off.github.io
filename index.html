@@ -888,130 +888,146 @@
 <body>
     <canvas id="star-canvas"></canvas>
 
-    <script>
-        // JS для Canvas звездного фона
-        const canvas = document.getElementById('star-canvas');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-        const numStars = 200;
+    // JS для Canvas звездного фона и анимированных счетчиков
+document.addEventListener('DOMContentLoaded', () => {
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+    // ===========================================
+    // 1. КОД ДЛЯ ЗВЕЗДНОГО CANVAS (без изменений)
+    // ===========================================
+    const canvas = document.getElementById('star-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    const numStars = 200;
 
-        function Star() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.radius = Math.random() * 1.5;
-            this.vx = Math.random() * 0.1 - 0.05; // Легкое движение
-            this.vy = Math.random() * 0.1 - 0.05;
-            this.alpha = Math.random();
-            this.fadeSpeed = Math.random() * 0.01 + 0.005; // Скорость мерцания
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-            this.draw = function() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
-                ctx.fill();
-            };
+    function Star() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 1.5;
+        this.vx = Math.random() * 0.1 - 0.05; 
+        this.vy = Math.random() * 0.1 - 0.05;
+        this.alpha = Math.random();
+        this.fadeSpeed = Math.random() * 0.01 + 0.005; 
 
-            this.update = function() {
-                this.x += this.vx;
-                this.y += this.vy;
+        this.draw = function() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+            ctx.fill();
+        };
 
-                // Зацикливание звезд
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                }
+        this.update = function() {
+            this.x += this.vx;
+            this.y += this.vy;
 
-                this.alpha += this.fadeSpeed;
-                if (this.alpha <= 0 || this.alpha >= 1) {
-                    this.fadeSpeed *= -1;
-                }
-            };
-        }
-
-        function initStars() {
-            for (let i = 0; i < numStars; i++) {
-                stars.push(new Star());
+            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
             }
+
+            this.alpha += this.fadeSpeed;
+            if (this.alpha <= 0 || this.alpha >= 1) {
+                this.fadeSpeed *= -1;
+            }
+        };
+    }
+
+    function initStars() {
+        for (let i = 0; i < numStars; i++) {
+            stars.push(new Star());
         }
+    }
 
-        function animateStars() {
-            requestAnimationFrame(animateStars);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            stars.forEach(star => {
-                star.update();
-                star.draw();
-            });
-        }
-
-        initStars();
-        animateStars();
-
-        // JS для анимированных счетчиков
-    document.addEventListener('DOMContentLoaded', () => {
-        const counters = document.querySelectorAll('.stat-value');
-        
-        function formatNumber(num) {
-            // Форматирование числа с пробелами как разделителями тысяч
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        }
-
-        counters.forEach(counter => {
-            let currentValue = parseInt(counter.getAttribute('data-target'));
-            const increment = parseInt(counter.getAttribute('data-increment'));
-            
-            // Инициализация счетчика
-            counter.textContent = formatNumber(currentValue);
-
-            const updateCounter = () => {
-                // Увеличение значения на заданный инкремент
-                currentValue += increment;
-                
-                // Обновление отображения
-                counter.textContent = formatNumber(currentValue);
-                
-                // Скорость обновления: каждые 1-2 секунды (случайный интервал для естественности)
-                const delay = Math.random() * 1000 + 1000; 
-                setTimeout(updateCounter, delay);
-            };
-
-            // Запускаем счетчик через небольшой интервал после загрузки
-            setTimeout(updateCounter, 3000); 
+    function animateStars() {
+        requestAnimationFrame(animateStars);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(star => {
+            star.update();
+            star.draw();
         });
+    }
+
+    initStars();
+    animateStars();
+    
+    // ===========================================
+    // 2. КОД ДЛЯ ЛОГОТИПОВ (без изменений)
+    // ===========================================
+    const GB_LOGO_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC80lEQVR4nO2az2tVQRHHu3d7t9s2adU6LooRBP4J/C/4I4L/L/wDgg8vLKKggoIi+JdgS6oJ3YV/gkhS+z13xswmMxvdvYnLh82XmWxmb/PdmWfmb+aT/f/11a5pM8vVn1L1/v7+18mP3g1uI4aJ3lK1S/pD+m7o9+c/2776c5rI+0R1p+n9SjpL9lE/2f5t+9lNaSNpSekTkm62gT1X9I/SXpL0n5L/0V6S9JtI28g/9J/2v5N+t1W2zTJJQ0DqFvS37KvVf5V+xH+7cWb+gPph+2d9W/bTtv4Nf/hN2v/aTu/307b22K+q/bT+lM27yP9v/an9tO29iN9SPpY9n7aT/rP0sO2bY1pJP2c9IP2y/aLtlE/mH5K0j/bTtv6Afl0wX8b3bZ/1P5ZdsLWH/jD+gH5A9rD9hG/5C9kv21+yP+T/8R/uJvP/kR32v4X+33bFltT/Jzsv22+yS+j32w/ZPtl32/pL+0920z7H9LfsQdts+x/ZPtlF2//xH+3n22O2X/b/p1+3cWXfVft32zn7H9Pfs0dts+w/bfdsU+w//E/eLtvN+x/ePtlF23/+528/7Vltb/m3tX23/dvdv/vLz/9t+2pbf/7m779uf8D+0N+/2g/Y/tD++v23/5P9oP22+2lbf/pX9pP23+3/aP9mP23/ZPtv/2L+1P7T/tv2x/Zz9m/2v7Y/tN+z/ZP9v+yHb/9lP2T7Zftj+2m/Yftv2x/Z/tP2X/afsv2//Yfsv2y/ZH9tP2x/bV9sP2h/bV9sP2v7Zftf2z/bX9t/2/7b/tv22/b/tt+237X9tv237X/tv237X/tv237X/tv237X/tv237X/tv237X/tv237X/tv237X/tv237X/tv237X/tv237X/tv237X/tv237X/tv237X/tt/wGjD8G+T+SgAAAABJRU5ErkJggg==";
+    const TG_BOT_ICON_BASE64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2LjMyNCA2LjcwMUMxNi4zMjQgNi43MDEgMTYuNDI1IDUuMTgzIDE1LjYxMyA0LjM3MUwxMi41MzcgMS4zNjRDMTEuNzI2IDAuNTUzIDEwLjE1NSAwLjU1MyA5LjMzOSAxLjM2NEw1LjYwMyA1LjM5NWMtMC44MTIgMC44MTIgLTAuNzEyIDIuMzgyIC0wLjcxMiAyLjM4Mkw4LjA1NSA5LjgyNkM4LjA1NSA5LjgyNiA4LjE1NiAxMC4wNjYgOC44NjggMTAuMjQ1TDExLjE5MSAxMS4wNjRMMTAuMzgyIDEzLjM4N0MxMC4yMDMgMTQuMDg5IDEwLjA5NiAxNC4yMjkgMTAuMDk2IDE0LjIyOUw1Ljk3NyAxNi41MzVjLTAuNDEyIDAuNjE2IC0wLjExNyAxLjM0NSAwLjQ0NiAxLjc1N2wyLjU2MyAxLjg1QzkuNDMyIDIwLjcyNSAxMC40MjcgMjAuODcgMTEuMjYzIDIwLjMyTDExLjkyOCAyMC4xMzJDMTEuOTI4IDIwLjEzMiAxMi4yNzEgMTkuMTEyIDEyLjg3MiAxOC4xODdMMTkuMDcgMTAuNTY3QzE5LjA3IDEwLjU2NyAxOS4zMjUgMTAuMjU1IDE5LjM1NiA5LjgwOEwxNi4zMjQgNi43MDFaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K";
+
+    document.querySelectorAll('.logo-icon').forEach(icon => {
+        icon.innerHTML = `<img src="${GB_LOGO_BASE64}" alt="Логотип Глаз Бога" class="logo-image">`;
+    });
+    document.querySelectorAll('.hero-bot-icon').forEach(icon => {
+        icon.innerHTML = `<img src="${GB_LOGO_BASE64}" alt="Логотип Бота" class="logo-image">`;
+    });
+    document.querySelectorAll('.bot-icon').forEach(icon => {
+        icon.innerHTML = `<img src="${GB_LOGO_BASE64}" alt="Иконка Бота" class="logo-image">`;
     });
 
-        // Base64 Placeholder для логотипов (обновленный SVG для Telegram)
-        const GB_LOGO_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC80lEQVR4nO2az2tVQRDHu3d7t9s2adU6LooRBP4J/C/4I4L/L/wDgg8vLKKggoIi+JdgS6oJ3YV/gkhS+z13xswmMxvdvYnLh82XmWxmb/PdmWfmb+aT/f/11a5pM8vVn1L1/v7+18mP3g1uI4aJ3lK1S/pD+m7o9+c/2776c5rI+0R1p+n9SjpL9lE/2f5t+9lNaSNpCekTkm62gT1X9I/SXpL0r5L/0V6S9JtI28g/9J/2v5N+t1W2zTJJQ0DqFvS37KvVf5V+xH+7cWb+gPph+0d9W/bTtv4Nf/hN2v/aTu/307b22K+q/bT+lM27yP9v/an9tO29iN9SPpY9n7aT/rP0sO2bY1pJP2c9IP2y/aLtlE/mH5K0j/bTtv6Afl0wX8b3bZ/1P5ZdsLWH/jD+gH5A9rD9hG/5C9kv21+yP+T/8R/uJvP/kR32v4X+33bFltT/Jzsv22+yS+j32w/ZPtl32/pL+0920z7H9LfsQdts+x/ZPtlF2//xH+3n22O2X/b/p1+3cWXfVft32zn7H9Pfs0dts+w/bfdsU+w//E/eLtvN+x/ePtlF23/+528/7Vltb/m3tX23/dvdv/vLz/9t+2pbf/7m779uf8D+0N+/2g/Y/tD++v23/5P9oP22+2lbf/pX9pP23+3/aP9mP23/ZPtv/2L+1P7T/tv2x/Zz9m/2v7Y/tN+z/ZP9v+yHb/9lP2T7Zftj+2m/Yftv2x/Z/tP2X/afsv2//Yfsv2y/ZH9tP2x/bV9sP2h/bV9sP2v7Zftf2z/bX9t/2/7b/tv22/b/tt+237X9tv237X/tt+237X9tv237X/tv237X/tt+237X/tt+237X9tv237X/tt+237X9tv237X/tt+237X9tv237X/tt+237X9tv237X/tv237X9tv237X9tt/wGjD8G+T+SgAAAABJRU5ErkJggg==";
-        const TG_BOT_ICON_BASE64 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2LjMyNCA2LjcwMUMxNi4zMjQgNi43MDEgMTYuNDI1IDUuMTgzIDE1LjYxMyA0LjM3MUwxMi41MzcgMS4zNjRDMTEuNzI2IDAuNTUzIDEwLjE1NSAwLjU1MyA5LjMzOSAxLjM2NEw1LjYwMyA1LjM5NWMtMC44MTIgMC44MTIgLTAuNzEyIDIuMzgyIC0wLjcxMiAyLjM4Mkw4LjA1NSA5LjgyNkM4LjA1NSA5LjgyNiA4LjE1NiAxMC4wNjYgOC44NjggMTAuMjQ1TDExLjE5MSAxMS4wNjRMMTAuMzgyIDEzLjM4N0MxMC4yMDMgMTQuMDg5IDEwLjA5NiAxNC4yMjkgMTAuMDk2IDE0LjIyOUw1Ljk3NyAxNi41MzVjLTAuNDEyIDAuNjE2IC0wLjExNyAxLjM0NSAwLjQ0NiAxLjc1N2wyLjU2MyAxLjg1QzkuNDMyIDIwLjcyNSAxMC40MjcgMjAuODcgMTEuMjYzIDIwLjMyTDExLjkyOCAyMC4xMzJDMTEuOTI4IDIwLjEzMiAxMi4yNzEgMTkuMTEyIDEyLjg3MiAxOC4xODdMMTkuMDcgMTAuNTY3QzE5LjA3IDEwLjU2NyAxOS4zMjUgMTAuMjU1IDE5LjM1NiA5LjgwOEwxNi4zMjQgNi43MDFaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K";
+    document.querySelectorAll('.hero-bot-button, .bot-button').forEach(button => {
+        if (button.href.includes('t.me') && !button.querySelector('img')) { 
+            const iconSpan = document.createElement('span');
+            iconSpan.innerHTML = `<img src="${TG_BOT_ICON_BASE64}" alt="Telegram" style="width: 22px; height: 22px; vertical-align: middle;">`;
+            iconSpan.style.marginRight = '8px';
+            button.prepend(iconSpan);
+        }
+    });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.logo-icon').forEach(icon => {
-                icon.innerHTML = `<img src="${GB_LOGO_BASE64}" alt="Логотип Глаз Бога" class="logo-image">`;
-            });
-            document.querySelectorAll('.hero-bot-icon').forEach(icon => {
-                icon.innerHTML = `<img src="${GB_LOGO_BASE64}" alt="Логотип Бота" class="logo-image">`;
-            });
-            document.querySelectorAll('.bot-icon').forEach(icon => {
-                icon.innerHTML = `<img src="${GB_LOGO_BASE64}" alt="Иконка Бота" class="logo-image">`;
-            });
+    // ===========================================
+    // 3. ОБНОВЛЕННЫЙ КОД ДЛЯ СЧЕТЧИКОВ (с кешированием)
+    // ===========================================
+    const counters = document.querySelectorAll('.stat-value');
+    
+    function formatNumber(num) {
+        // Форматирование числа с пробелами как разделителями тысяч
+        return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
 
-            document.querySelectorAll('.hero-bot-button, .bot-button').forEach(button => {
-                if (button.href.includes('t.me') && !button.querySelector('img')) { // Проверка, чтобы не дублировать
-                    const iconSpan = document.createElement('span');
-                    iconSpan.innerHTML = `<img src="${TG_BOT_ICON_BASE64}" alt="Telegram" style="width: 22px; height: 22px; vertical-align: middle;">`;
-                    iconSpan.style.marginRight = '8px';
-                    button.prepend(iconSpan);
-                }
-            });
-        });
-    </script>
+    counters.forEach((counter, index) => {
+        // Уникальный ключ для LocalStorage
+        const storageKey = `glazboga_counter_${index}`;
+        const dataTarget = parseInt(counter.getAttribute('data-target'));
+        const increment = parseInt(counter.getAttribute('data-increment'));
+        
+        // 1. ПОПЫТКА ЗАГРУЗИТЬ ЗНАЧЕНИЕ ИЗ КЭША
+        let currentValue = parseFloat(localStorage.getItem(storageKey));
+        
+        // Если кэш пуст или некорректен, используем начальное значение из data-target
+        if (isNaN(currentValue) || currentValue < dataTarget) {
+            currentValue = dataTarget;
+        }
 
+        // Инициализация отображения
+        counter.textContent = formatNumber(currentValue);
+
+
+        const updateCounter = () => {
+            // Увеличение значения
+            currentValue += increment;
+            
+            // 2. СОХРАНЕНИЕ НОВОГО ЗНАЧЕНИЯ В КЭШ
+            localStorage.setItem(storageKey, currentValue);
+
+            // Обновление отображения
+            counter.textContent = formatNumber(currentValue);
+            
+            // Скорость обновления: каждые 1-2 секунды
+            const delay = Math.random() * 1000 + 1000; 
+            setTimeout(updateCounter, delay);
+        };
+
+        // Запускаем счетчик через небольшой интервал после загрузки (3 секунды)
+        setTimeout(updateCounter, 3000); 
+    });
+});
     <header>
         <div class="container">
             <div class="header-content">
